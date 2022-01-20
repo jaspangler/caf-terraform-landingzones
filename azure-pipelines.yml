@@ -27,9 +27,9 @@ resources:
     options: --user 0:0 -e TF_PLUGIN_CACHE_DIR="/home/$(HOME_FOLDER_USER)/tf-plugin-cache" -e TF_DATA_DIR="/home/$(HOME_FOLDER_USER)"
 
   repositories:
-  - repository: caf-terraform-landingzones-starter
+  - repository: caf-terraform-landingzones
     type: github
-    name: jaspangler/caf-terraform-landingzones-starter
+    name: jaspangler/caf-terraform-landingzones
     endpoint: jaspangler
 
 jobs:
