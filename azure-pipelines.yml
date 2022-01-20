@@ -3,6 +3,13 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+trigger: none
+
+name: "landingzone_test"
+
+variables:
+  group: demo-release-global
+
 parameters:
 - name: landingzone_action
   displayName: Landing Zone Action
@@ -24,13 +31,6 @@ resources:
     type: github
     name: jaspangler/caf-terraform-landingzones-starter
     endpoint: jaspangler
-
-trigger: none
-
-name: "landingzone_test"
-
-variables:
-  group: demo-release-global
 
 jobs:
 - job: launchpad
