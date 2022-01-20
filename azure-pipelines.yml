@@ -8,7 +8,7 @@ trigger: none
 name: "landingzone_test"
 
 variables:
-  group: demo-release-global
+- group: demo-release-global
 
 parameters:
 - name: landingzone_action
