@@ -3,6 +3,16 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+parameters:
+- name: landingzone_action
+  displayName: Landing Zone Action
+  type: string
+  default: Plan
+  values:
+  - Plan
+  - Apply
+  - Destroy
+
 resources:
   containers:
   - container: rover
