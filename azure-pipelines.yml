@@ -10,9 +10,9 @@ resources:
     options: --user 0:0 -e TF_PLUGIN_CACHE_DIR="/home/$(HOME_FOLDER_USER)/tf-plugin-cache" -e TF_DATA_DIR="/home/$(HOME_FOLDER_USER)"
 
   repositories:
-  - repository: terraform-landingzones
+  - repository: caf-terraform-landingzones-starter
     type: git
-    name: terraform-landingzones
+    name: caf-terraform-landingzones-starter
 
 trigger: none
 
