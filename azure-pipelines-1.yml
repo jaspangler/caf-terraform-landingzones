@@ -11,6 +11,8 @@ pool:
 
 variables:
 - group: my-variable-group
+- group: demo-release-global
 
 steps:
 - script: echo $(myhello) # uses macro syntax
+- script: echo $(ROVER_IMAGE) # uses macro syntax
