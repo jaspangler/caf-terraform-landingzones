@@ -3,19 +3,14 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-variables:
-  group: demo-release-global
-
 trigger:
 - master
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+- group: my-variable-group
 
-- script: |
-    echo $(ROVER_IMAGE)
-  displayName: 'Run a multi-line script'
+steps:
+- script: echo $(myhello) # uses macro syntax
