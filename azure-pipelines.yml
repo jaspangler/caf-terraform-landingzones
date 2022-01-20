@@ -3,17 +3,48 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
+resources:
+  containers:
+  - container: rover
+    image: $(ROVER_IMAGE)
+    options: --user 0:0 -e TF_PLUGIN_CACHE_DIR="/home/$(HOME_FOLDER_USER)/tf-plugin-cache" -e TF_DATA_DIR="/home/$(HOME_FOLDER_USER)"
 
-pool:
-  vmImage: ubuntu-latest
+  repositories:
+  - repository: terraform-landingzones
+    type: git
+    name: terraform-landingzones
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+trigger: none
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+name: "landingzone_test"
+
+variables:
+  group: demo-release-global
+
+jobs:
+- job: launchpad
+  displayName: "apply level0 launchpad"
+  continueOnError: false
+
+  container: rover
+
+  variables:
+  - group: release-level0-bootstrap
+
+  steps:
+  - checkout: self
+
+  - bash: |
+      az login --service-principal -u '$(ARM_CLIENT_ID)' -p '$(ARM_CLIENT_SECRET)' --tenant '$(ARM_TENANT_ID)'
+      az account set -s $(ARM_SUBSCRIPTION_ID)
+
+      export ARM_CLIENT_ID=$(ARM_CLIENT_ID)
+      export ARM_CLIENT_SECRET=$(ARM_CLIENT_SECRET)
+      export ARM_TENANT_ID=$(ARM_TENANT_ID)
+      export ARM_SUBSCRIPTION_ID=$(ARM_SUBSCRIPTION_ID)
+
+      /tf/rover/launchpad.sh /tf/launchpads/launchpad_opensource ${{ parameters.landingzone_action }} \
+          -var-file ${BUILD_REPOSITORY_LOCALPATH}/$(TF_VAR_workspace)/launchpads/launchpad_opensource/launchpad.tfvars
+
+    failOnStderr: true
+    displayName: 'Terraform ${{ parameters.landingzone_action }}'
