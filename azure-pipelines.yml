@@ -11,8 +11,9 @@ resources:
 
   repositories:
   - repository: caf-terraform-landingzones-starter
-    type: git
-    name: caf-terraform-landingzones-starter
+    type: github
+    name: jaspangler/caf-terraform-landingzones-starter
+    endpoint: jaspangler
 
 trigger: none
 
